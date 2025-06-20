@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+    ports:
+      - "5432:5432"
+  
+  user-app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgresql://postgres:mysecretpassword@postgres:5432/postgres
+    ports:
+      - "3000:3000"

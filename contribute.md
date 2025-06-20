@@ -32,12 +32,13 @@
     - Start postgres
         - docker run --network user-network --name postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres
     - Build the image 
-        - docker build --network=host -t user-project . (Use localhost in DATABASE_URL)
-        OR
-        - docker build --network user-network -t user-project . (Use db container name 'postgres' in DATABASE_URL)
+        - docker build --network=host -t user-project .
     - Run docker container
-        - docker run -e DATABASE_URL=postgresql://postgres:mysecretpassword@localhost:5432/postgres --network user-network -d -p 3000:3000 user-project 
+        - docker run -e DATABASE_URL=postgresql://postgres:mysecretpassword@postgres:5432/postgres --network user-network -d -p 3000:3000 user-project 
 
 ## Docker Compose installation
     - Install docker, docker-compose
     - Run 'docker-compose up'
+
+
+### Note: Added 'npx prisma migrate dev' command in package.json in start script. So it will run when a container starts, so it will not be running at docker build time, as it requires to talk to database which is difficult to setup in Docker compose. 
