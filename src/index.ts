@@ -8,9 +8,10 @@ const prismaClient = new PrismaClient();
 app.get("/", async (req, res) => {
     const data = await prismaClient.user.findMany();
     res.json({
-        data
-    })
-})
+        data,
+        "hi there": "hellow"
+    });
+});
 
 app.post("/", async (req, res) => {
     await prismaClient.user.create({

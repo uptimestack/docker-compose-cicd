@@ -27,6 +27,7 @@
 
 ## Docker installation
     - Install docker
+    - create .env file
     - Create docker network
         - docker network create user-network
     - Start postgres
@@ -35,9 +36,11 @@
         - docker build --network=host -t user-project .
     - Run docker container
         - docker run -e DATABASE_URL=postgresql://postgres:mysecretpassword@postgres:5432/postgres --network user-network -d -p 3000:3000 user-project 
+        - docker run --network user-network -d -p 3000:3000 user-project 
 
 ## Docker Compose installation
     - Install docker, docker-compose
+    - create .env file
     - Run 'docker-compose up'
 
 
