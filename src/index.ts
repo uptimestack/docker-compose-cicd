@@ -9,7 +9,7 @@ app.get("/", async (req, res) => {
     const data = await prismaClient.user.findMany();
     res.json({
         data,
-        "hi there": "hellow"
+        "hi there": "Cricket"
     });
 });
 

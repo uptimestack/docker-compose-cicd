@@ -16,5 +16,22 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST}} >> ~/.ssh/known_hosts
+          echo "SSH Successfull"
 
-          echo "SSH Successful"
+      - name: Deploy to Azure VM
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            set -e
+            cd ${{ secrets.APP_DIR }}
+
+            # Pull latest changes
+            git reset --hard
+            git pull origin master
+
+            # Remove old containers and images
+            docker compose down
+            docker system prune -af
+
+            # Restart containers
+            docker compose up -d
+          EOF
